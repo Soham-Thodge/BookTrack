@@ -24,7 +24,7 @@ const BookingForm = () => {
         const fetchMovies = async () => {
             try {
                 const movieData = await Promise.all(imdbIds.map(async (id) => {
-                    const response = await axios.get(`http://www.omdbapi.com/?&i=${id}&apikey=263b15b5`);
+                    const response = await axios.get(`https://www.omdbapi.com/?&i=${id}&apikey=263b15b5`);
                     return response.data;
                 }));
 

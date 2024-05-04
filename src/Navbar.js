@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Routes, Route, Switch, Link } from 'react-router-dom';
+import BookingForm from "./BookingForm";
+import ContactFooter from "./ContactFooter";
+import { Simulate } from "react-dom/test-utils";
 
 const Navbar = () => {
 
@@ -34,7 +37,7 @@ const Navbar = () => {
                         }}>Home</Link>
                 </li>
                 <li style={{ marginRight:'10px' }}>
-                    <Link to="BookingForm" style={{ 
+                    <Link to="/booking" style={{ 
                         color: 'red', 
                         textDecoration: 'none',
                         padding: '10px 20px',
@@ -44,7 +47,7 @@ const Navbar = () => {
                         }}>Booking</Link>
                 </li>
                 <li style={{ marginRight:'10px' }}>
-                    <Link to="ContactForm" style={{ 
+                    <Link to="/contact" style={{ 
                         color: 'red', 
                         textDecoration: 'none',
                         padding: '10px 20px',
@@ -54,8 +57,9 @@ const Navbar = () => {
                         }}>Contact</Link>
                 </li>
             </ul>
-            </div>
+        </div>
         </nav>
+
     );
 };
 

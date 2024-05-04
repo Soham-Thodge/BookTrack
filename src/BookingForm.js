@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReceiptPage from './ReceiptPage';
 import TheaterSeats from './TheaterSeats';
+import jsPDF from 'jspdf';
 
 const BookingForm = () => {
     const [formData, setFormData] = useState({
@@ -67,11 +68,21 @@ const BookingForm = () => {
         setFormData({ ...formData, movie: selectedMovieTitle });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
-        console.log(formData.movie);
-        setSubmitted(true);
+        const doc = new jsPDF();
+        doc.setFont('helvetica');
+        doc.setFontSize(12);
+
+        doc.setFillColor(255, 255, 255); 
+        doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
+
+        doc.setTextColor(0, 0, 0);
+        doc.text('Receipt', 10, 10);
+        doc.text(`Receipt\n\nName: ${formData.name}\nEmail: ${formData.email}\nDate: ${formData.date}\nNumber of Tickets: ${formData.number}\nSelected Movie: ${formData.movie}\nSelected Seats:${selectedSeats}`, 10, 20);
+
+        doc.save('receipt.pdf');
+        setSubmitted(false);
     };
 
     if (submitted) {
@@ -87,6 +98,7 @@ const BookingForm = () => {
     return (
         <div className='booking-section'>
             <h1 className='Booking-title'>Booking Form</h1>
+            {!submitted ? (
             <form className="booking-form" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="name">Name:</label>
@@ -134,9 +146,15 @@ const BookingForm = () => {
                     seatsPerRow={10}
                     handleSeatClick={handleSeatClick}
                 />
-
                 <button className='confirm' type="submit">Confirm</button>
             </form>
+            ) : (
+                <ReceiptPage
+                    formData={formData}
+                    selectedMovie={formData.movie}
+                    selectedSeats={selectedSeats}
+                />
+            )}
         </div>
     );
 };

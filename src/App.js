@@ -3,7 +3,7 @@ import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
 import BookingForm from "./BookingForm";
 import Navbar from "./Navbar";
 import HeroSection from "./HeroSection";
-import ReceiptPage from "./ReceiptPage";
+import ContactFooter from "./ContactFooter";
 
 
 
@@ -22,8 +22,8 @@ const App = () => {
         <HeroSection images={images}/>
         <Routes>
             <Route path="/" element={<BookingForm />} />
-            <Route path="/receipt" element={<ReceiptPage/>}/>
         </Routes>
+        <ContactFooter/>
       </Router>
     </div>
   );

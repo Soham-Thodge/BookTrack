@@ -1,23 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import jsPDF from 'jspdf';
 
-const ReceiptPage = ({ formData, selectedMovie, selectedSeats }) => {
-    const downloadReceiptAsPDF = () => {
-        const doc = new jsPDF();
-        doc.text(`Receipt\n\nName: ${formData.name}\nEmail: ${formData.email}\nDate: ${formData.date}\nNumber of Tickets: ${formData.number}\nSelected Movie: ${selectedMovie}\nSelected Seats: ${selectedSeats.join(', ')}`, 10, 10);
-        doc.save('receipt.pdf');
-    };
 
-    return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-            <h1>Receipt</h1>
-            <p>Name: {formData.name}</p>
-            <p>Email: {formData.email}</p>
-            <p>Date: {formData.date}</p>
-            <p>Number of Tickets: {formData.number}</p>
-            <p>Selected Movie: {selectedMovie}</p>
-            <button className="Hero-button" onClick={downloadReceiptAsPDF}>Download as PDF</button>
-        </div>
-    );
+const ReceiptPage = ({ formData, selectedMovie, selectedSeats }) => {
+    useEffect(() => {
+        const formattedSelectedSeats = selectedSeats.join(', ');
+        const doc = new jsPDF();
+
+        doc.setFont('helvetica');
+        doc.setFontSize(12);
+
+        doc.setFillColor(255, 255, 255); 
+        doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
+
+        doc.setTextColor(0, 0, 0);
+        doc.text('Receipt', 10, 10);
+        doc.text(`Receipt\n\nName: ${formData.name}\nEmail: ${formData.email}\nDate: ${formData.date}\nNumber of Tickets: ${formData.number}\nSelected Movie: ${selectedMovie}\nSelected Seats:${selectedSeats}`, 10, 20);
+
+        doc.save('receipt.pdf');
+    }, [formData, selectedMovie, selectedSeats]);
+
+    // Render nothing, as we don't need to return any JSX
+    return null;
 };
+
 export default ReceiptPage;

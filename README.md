@@ -39,3 +39,11 @@ npm start
 ![Screenshot 2](Booking-form.png)
 ![Screenshot 3](OMdb.png)
 ![Screenshot 3](Seats.png)
+
+## Acknowledgements
+
+- The OMDB API (Open Movie Database) for providing movie data and metadata for the app.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).

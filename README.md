@@ -21,7 +21,7 @@ Book Track is a web application that allows users to book movie tickets online.
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/book-track.git
+git clone https://github.com/your-username/BookTrack.git
 ```
 2. Navigate to the project directory
   cd BookTrack

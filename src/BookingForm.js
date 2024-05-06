@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ReceiptPage from './ReceiptPage';
 import TheaterSeats from './TheaterSeats';
 import jsPDF from 'jspdf';
 import { createClient } from '@supabase/supabase-js';
@@ -90,7 +89,17 @@ const BookingForm = () => {
             } 
 
             console.log("Booking data stored in Supabase:", data);
+        }
+        catch (error) {
+            console.error('Error storing booking data in Supabase:', error);
+        }
+        setSubmitted(true);
+    };
+    const ReceiptPage = ({ formData, selectedMovie, selectedSeats }) => {
+        useEffect(() => {
+            const formattedSelectedSeats = selectedSeats.join(', ');
             const doc = new jsPDF();
+    
             doc.setFont('helvetica');
             doc.setFontSize(12);
     
@@ -98,14 +107,11 @@ const BookingForm = () => {
             doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
     
             doc.setTextColor(0, 0, 0);
-            doc.text('Receipt', 10, 10);
-            doc.text(`Receipt\n\nName: ${formData.name}\nEmail: ${formData.email}\nDate: ${formData.date}\nNumber of Tickets: ${formData.number}\nSelected Movie: ${formData.movie}\nSelected Seats:${selectedSeats}`, 10, 20);
+            doc.text(`Receipt\n\nName: ${formData.name}\nEmail: ${formData.email}\nDate: ${formData.date}\nNumber of Tickets: ${formData.number}\nSelected Movie: ${selectedMovie}`);
             doc.save('receipt.pdf');
-        }
-        catch (error) {
-            console.error('Error storing booking data in Supabase:', error);
-        }
-        setSubmitted(true);
+        }, [formData, selectedMovie, selectedSeats]);
+    
+        return null;
     };
 
     if (submitted) {

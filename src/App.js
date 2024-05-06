@@ -6,7 +6,6 @@ import HeroSection from "./HeroSection";
 import ContactFooter from "./ContactFooter";
 
 
-
 const App = () => {
   const images = [
     require("./images/Dune.jpg"),

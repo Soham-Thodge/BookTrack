@@ -3,6 +3,11 @@ import axios from 'axios';
 import ReceiptPage from './ReceiptPage';
 import TheaterSeats from './TheaterSeats';
 import jsPDF from 'jspdf';
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseURL = 'https://jimvadrzkxsntjyklhrs.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImppbXZhZHJ6a3hzbnRqeWtsaHJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQ4ODk5MzIsImV4cCI6MjAzMDQ2NTkzMn0.bSnHVGSvMtgLfLYuqqgw4crQFkHtGsc6uwXLig6hOEA';
+const supabase = createClient(supabaseURL,supabaseKey);
 
 const BookingForm = () => {
     const [formData, setFormData] = useState({
@@ -70,19 +75,37 @@ const BookingForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const doc = new jsPDF();
-        doc.setFont('helvetica');
-        doc.setFontSize(12);
+        try {
+            const { data, error } = await supabase.from('bookings').insert ([
+                {
+                    email:formData.email,
+                    name:formData.name,
+                    date:formData.date,
+                    number_of_tickets:formData.number,
+                    movie:formData.movie,
+                }
+            ]);
+            if (error) {
+                throw error;
+            } 
 
-        doc.setFillColor(255, 255, 255); 
-        doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
-
-        doc.setTextColor(0, 0, 0);
-        doc.text('Receipt', 10, 10);
-        doc.text(`Receipt\n\nName: ${formData.name}\nEmail: ${formData.email}\nDate: ${formData.date}\nNumber of Tickets: ${formData.number}\nSelected Movie: ${formData.movie}\nSelected Seats:${selectedSeats}`, 10, 20);
-
-        doc.save('receipt.pdf');
-        setSubmitted(false);
+            console.log("Booking data stored in Supabase:", data);
+            const doc = new jsPDF();
+            doc.setFont('helvetica');
+            doc.setFontSize(12);
+    
+            doc.setFillColor(255, 255, 255); 
+            doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
+    
+            doc.setTextColor(0, 0, 0);
+            doc.text('Receipt', 10, 10);
+            doc.text(`Receipt\n\nName: ${formData.name}\nEmail: ${formData.email}\nDate: ${formData.date}\nNumber of Tickets: ${formData.number}\nSelected Movie: ${formData.movie}\nSelected Seats:${selectedSeats}`, 10, 20);
+            doc.save('receipt.pdf');
+        }
+        catch (error) {
+            console.error('Error storing booking data in Supabase:', error);
+        }
+        setSubmitted(true);
     };
 
     if (submitted) {

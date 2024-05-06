@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { BrowserRouter as Routes, Route, Switch, Link } from 'react-router-dom';
 import BookingForm from "./BookingForm";
 import ContactFooter from "./ContactFooter";
-import { Simulate } from "react-dom/test-utils";
 
 const Navbar = () => {
-
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
  
     const toggleMobileMenu = () => {

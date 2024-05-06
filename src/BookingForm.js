@@ -107,22 +107,13 @@ const BookingForm = () => {
             doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
     
             doc.setTextColor(0, 0, 0);
-            doc.text(`Receipt\n\nName: ${formData.name}\nEmail: ${formData.email}\nDate: ${formData.date}\nNumber of Tickets: ${formData.number}\nSelected Movie: ${selectedMovie}`);
+            doc.text(`Receipt\n\nName: ${formData.name}\nEmail: ${formData.email}\nDate: ${formData.date}\nNumber of Tickets: ${formData.number}\nSelected Movie: ${selectedMovie}`, 10, 20);
             doc.save('receipt.pdf');
         }, [formData, selectedMovie, selectedSeats]);
     
         return null;
     };
 
-    if (submitted) {
-        return (
-            <ReceiptPage
-                formData={formData}
-                selectedMovie={formData.movie}
-                selectedSeats={selectedSeats}
-            />
-        );
-    }
 
     return (
         <div className='booking-section'>

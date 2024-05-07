@@ -18,11 +18,13 @@ const HeroSection = ({ images }) => {
       <div className='image-container'>
         <img src={images[currentImageIndex]} alt={`Slide ${currentImageIndex + 1}`} className='carousel-image' />
         <div className='overlay'>
+          <div className='overlay-container'>
           <h1 className='Hero-text'>BookTrack</h1>
           <p className='Desc'>Your one stop shop for movies.</p>
           <div className='Options'>
             <button className='Hero-button'>Booking</button>
             <button className='Hero-button'>Contact</button>
+          </div>
           </div>
         </div>
       </div>

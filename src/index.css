@@ -550,7 +550,7 @@ select {
 }
 
 .footer-content {
-  background-color: white;
+  background-color: #161b22;
   padding: 5%;
 }
 
@@ -561,18 +561,37 @@ select {
   padding-left: 42%;
 }
 .social-icons li a {
-  color: red;
+  color: white;
   margin-right: 40px;
   font-size: 40px;
   justify-content: center;
   align-items: center;
 }
 .copyright {
-  color: red;
+  color: white;
 }
 
-/* Media query for mobile responsiveness */
 @media (max-width: 768px) {
+  .Logo{
+    width:80px;
+    height: 80px;
+  }
+  .Hero-text {
+    font-size: 50px; /* Adjust font size for mobile */
+  }
+
+  .Desc {
+    font-size: 20px; /* Adjust font size for mobile */
+  }
+
+  .Hero-button {
+    font-size: 18px; /* Adjust font size for mobile */
+    padding: 8px; /* Adjust padding for mobile */
+  }
+
+  .overlay-container {
+    padding: 10px; /* Adjust padding for mobile */
+  }
   .hamburger-menu {
     display: block;
   }
@@ -595,4 +614,78 @@ select {
   .nav-links li {
     margin-bottom: 10px;
   }
+  .mobile-menu-container {
+    position: absolute;
+    top: 80px; /* Adjust based on the height of your navbar */
+    right: 10px; /* Adjust based on the desired position */
+    background-color: black;
+    border: 1px solid red;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 999; /* Ensure the container is on top of other elements */
+  }
+  
+  .nav-links {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navlinks {
+    margin-bottom: 10px;
+  }
+  .booking-section {
+    padding: 30px; /* Adjust padding for smaller screens */
+  }
+  .Booking-title{
+    font-size: 30px;
+  }
+  .booking-form {
+    padding: 20px;
+    max-width: 400px; /* Adjust padding for smaller screens */
+  }
+
+  .form-group {
+    margin-bottom: 15px; /* Adjust spacing between form fields */
+  }
+
+  .movie-card img {
+    max-width: 100%; /* Ensure images fit within the container */
+    height: auto;
+  }
+
+  .theater-seats {
+    padding: 50px; /* Adjust padding for smaller screens */
+  }
+
+  .seat-row {
+    flex-wrap: wrap; /* Allow seats to wrap to the next line */
+  }
+
+  .seat {
+    width: 25px; /* Adjust the size of seats on smaller screens */
+    height: 25px;
+    margin: 1px; /* Adjust spacing between seats */
+  }
+  .footer-content {
+    background-color: #161b22;
+    padding: 5%;
+  }
+  .copyright{
+    font-size: 10px;
+  }
+  .social-icons {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    padding-left: 24%;
+  }
+  .social-icons li a {
+    color: white;
+    margin-right: 35px;
+    font-size: 40px;
+    justify-content: center;
+    align-items: center;
+  }
 }
+

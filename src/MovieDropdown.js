@@ -8,7 +8,7 @@ const MovieDropdown = () => {
     const [selectedMovieDetails, setSelectedMovieDetails] = useState(null);
     
     useEffect(() => {
-        const imdbIds=['tt3896198','tt12637874','tt16426418','tt10869778','tt21235248','tt14539740','tt15239678','tt27744786','tt0111161','tt9179430'];
+        const imdbIds=['tt3896198','tt12637874','tt16426418','tt10869778','tt21235248','tt14539740','tt15239678','tt27744786','tt0111161','tt9179430','tt1684562','tt0120915'];
         
         const fetchMovies = async () => {
             try {

@@ -9,9 +9,9 @@ const HeroSection = ({ images }) => {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(nextImage, 5000); // Change image every 5 seconds
-    return () => clearInterval(intervalId); // Cleanup function to clear the interval
-  }, [images, nextImage]); // Re-run effect when images or nextImage function change
+    const intervalId = setInterval(nextImage, 5000); 
+    return () => clearInterval(intervalId); 
+  }, [images, nextImage]); 
 
   return (
     <div className='carousel'>

@@ -1,6 +1,4 @@
-import { supabase } from 'supabase'; // Import Supabase client
-
-// Function to create a new booking
+import { supabase } from 'supabase'; 
 export const createBooking = async (bookingData) => {
   const { data, error } = await supabase.from('bookings').insert([bookingData]);
   if (error) {
@@ -10,7 +8,6 @@ export const createBooking = async (bookingData) => {
   return data;
 };
 
-// Function to fetch all bookings
 export const fetchBookings = async () => {
   const { data, error } = await supabase.from('bookings').select('*');
   if (error) {
@@ -20,4 +17,4 @@ export const fetchBookings = async () => {
   return data;
 };
 
-// Add other functions for updating and deleting bookings if needed
+

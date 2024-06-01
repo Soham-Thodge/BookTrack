@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom';
 import BookingForm from "./BookingForm";
 import ContactFooter from "./ContactFooter";
+import { useAuth } from './AuthContext';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const { currentUser, logout } = useAuth();
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error('Failed to log out:', error);
+    }
+  };
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -23,38 +32,47 @@ const Navbar = () => {
         </div>
         <ul className="nav-links">
           <li className="navlinks">
-            <Link to="/" style={{ color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s' }}>
+            <NavLink to="/" activeClassName="active" onClick={() => setMobileMenuOpen(false)} style={{ marginBottom: '10px',color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s'  }}>
               Home
-            </Link>
+            </NavLink>
           </li>
-          <li className="navlinks">
-            <Link to="/booking" style={{ color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s' }}>
-              Booking
-            </Link>
-          </li>
-          <li className="navlinks">
-            <Link to="/contact" style={{ color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s' }}>
-              Contact
-            </Link>
-          </li>
+          {currentUser ? (
+          <>
+            <li>
+              <Link to="/profile" style={{ marginBottom: '10px',color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s'  }}>Profile</Link>
+            </li>
+            <li>
+              <button onClick={handleLogout} style={{ marginBottom: '10px',color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s'  }}>Logout</button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <Link to="/login" style={{ marginBottom: '10px',color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s'  }}>Login</Link>
+            </li>
+            <li>
+              <Link to="/signup" style={{ marginBottom: '10px',color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s'  }}>Sign Up</Link>
+            </li>
+          </>
+        )}
         </ul>
         {mobileMenuOpen && (
           <div className="mobile-overlay">
             <ul className="nav-links">
-              <li className="navlinks" style={{ marginBottom: '10px' }}>
-                <Link to="/" style={{ color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s' }}>
+              <li className="navlinks" style={{ marginBottom: '10px',color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s'  }}>
+                <NavLink to="/" activeClassName="active" onClick={() => setMobileMenuOpen(false)} >
                   Home
-                </Link>
+                </NavLink>
               </li>
-              <li className="navlinks" style={{ marginBottom: '10px' }}>
-                <Link to="/booking" style={{ color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s' }}>
-                  Booking
-                </Link>
+              <li className="navlinks" style={{ marginBottom: '10px',color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s'  }}>
+                <NavLink to="/login" activeClassName="active" onClick={() => setMobileMenuOpen(false)}>
+                  Login
+                </NavLink>
               </li>
-              <li className="navlinks" style={{ marginBottom: '10px' }}>
-                <Link to="/contact" style={{ color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s' }}>
-                  Contact
-                </Link>
+              <li className="navlinks" style={{ marginBottom: '10px',color: 'red', textDecoration: 'none', padding: '10px 20px', background: 'white', borderRadius: '5px', transition: 'background-color 0.3s, color 0.3s'  }}>
+                <NavLink to="/signup" activeClassName="active" onClick={() => setMobileMenuOpen(false)}>
+                  Sign Up
+                </NavLink>
               </li>
             </ul>
           </div>

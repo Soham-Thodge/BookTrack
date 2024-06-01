@@ -1,4 +1,5 @@
 import { supabase } from 'supabase'; 
+
 export const createBooking = async (bookingData) => {
   const { data, error } = await supabase.from('bookings').insert([bookingData]);
   if (error) {

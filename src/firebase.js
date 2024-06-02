@@ -3,7 +3,7 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDX5-O_xCuEaxUe7bjBByzbyu9VQyF3dmQ",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "booktrack-4dbe1.firebaseapp.com",
   projectId: "booktrack-4dbe1",
   storageBucket: "booktrack-4dbe1.appspot.com",

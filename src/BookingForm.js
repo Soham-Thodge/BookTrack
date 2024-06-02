@@ -5,8 +5,8 @@ import ReceiptPage from './ReceiptPage';
 import { createClient } from '@supabase/supabase-js';
 import { useAuth } from './AuthContext';
 
-const supabaseURL = 'https://jimvadrzkxsntjyklhrs.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImppbXZhZHJ6a3hzbnRqeWtsaHJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQ4ODk5MzIsImV4cCI6MjAzMDQ2NTkzMn0.bSnHVGSvMtgLfLYuqqgw4crQFkHtGsc6uwXLig6hOEA';
+const supabaseURL = process.env.REACT_APP_SUPABASE_URL;
+const supabaseKey = process.env.REACT_APP_SUPABASE_API_KEY;
 const supabase = createClient(supabaseURL, supabaseKey);
 
 const BookingForm = () => {
@@ -94,66 +94,77 @@ const BookingForm = () => {
             }
 
             console.log("Booking data stored in Supabase:", data);
+            alert('Booking confirmed!');
+
+            // Reset form state after submission
+            setFormData({
+                name: '',
+                email: '',
+                date: '',
+                number: '',
+                movie: ''
+            });
+            setSelectedSeats([]);
+            setSelectedMovieDetails(null);
+            setSubmitted(false);
         } catch (error) {
             console.error('Error storing booking data in Supabase:', error);
         }
-        setSubmitted(true);
     };
 
     return (
         <div className='booking-section'>
             <h1 className='Booking-title'>Booking Form</h1>
-            {!submitted ? (
-                <form className="booking-form" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="name">Name:</label>
-                        <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Email:</label>
-                        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="date">Date:</label>
-                        <input type="date" id="date" name="date" value={formData.date} onChange={handleChange} required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="number">Number of Tickets:</label>
-                        <input type="number" id="number" name="number" value={formData.number} onChange={handleChange} required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="movie">Select Movie:</label>
-                        <select id="movie" name="movie" value={formData.movie} onChange={(e) => handleMovieChange(e.target.value)} required>
-                            <option value="">See Available Movies</option>
-                            {movies.map((movie) => (
-                                <option key={movie.imdbID} value={movie.Title}>
-                                    {movie.Title}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>
-                        {selectedMovieDetails && (
-                            <div className="movie-card">
-                                <h3>{selectedMovieDetails.Title}</h3>
-                                {posters[selectedMovieDetails.Title] && (
-                                    <img src={posters[selectedMovieDetails.Title]} alt={selectedMovieDetails.Title} />
-                                )}
-                                <p>Released: {selectedMovieDetails.Year}</p>
-                                <p>Genre: {selectedMovieDetails.Genre}</p>
-                                <p>Director: {selectedMovieDetails.Director}</p>
-                                <p>Plot: {selectedMovieDetails.Plot}</p>
-                            </div>
-                        )}
-                    </div><br />
-                    <TheaterSeats
-                        rows={5}
-                        seatsPerRow={10}
-                        handleSeatClick={handleSeatClick}
-                    />
-                    <button className='confirm' type="submit">Confirm</button>
-                </form>
-            ) : (
+            <form className="booking-form" onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="name">Name:</label>
+                    <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="email">Email:</label>
+                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="date">Date:</label>
+                    <input type="date" id="date" name="date" value={formData.date} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="number">Number of Tickets:</label>
+                    <input type="number" id="number" name="number" value={formData.number} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="movie">Select Movie:</label>
+                    <select id="movie" name="movie" value={formData.movie} onChange={(e) => handleMovieChange(e.target.value)} required>
+                        <option value="">See Available Movies</option>
+                        {movies.map((movie) => (
+                            <option key={movie.imdbID} value={movie.Title}>
+                                {movie.Title}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    {selectedMovieDetails && (
+                        <div className="movie-card">
+                            <h3>{selectedMovieDetails.Title}</h3>
+                            {posters[selectedMovieDetails.Title] && (
+                                <img src={posters[selectedMovieDetails.Title]} alt={selectedMovieDetails.Title} />
+                            )}
+                            <p>Released: {selectedMovieDetails.Year}</p>
+                            <p>Genre: {selectedMovieDetails.Genre}</p>
+                            <p>Director: {selectedMovieDetails.Director}</p>
+                            <p>Plot: {selectedMovieDetails.Plot}</p>
+                        </div>
+                    )}
+                </div><br />
+                <TheaterSeats
+                    rows={5}
+                    seatsPerRow={10}
+                    handleSeatClick={handleSeatClick}
+                />
+                <button className='confirm' type="submit">Confirm</button>
+            </form>
+            {submitted && (
                 <ReceiptPage
                     formData={formData}
                     selectedMovie={formData.movie}

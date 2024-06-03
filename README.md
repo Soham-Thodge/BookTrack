@@ -15,13 +15,15 @@ Book Track is a web application that allows users to book movie tickets online.
 - Axios
 - HTML/CSS
 - JavaScript
+- Firebase
+- Supabase
 
 ## Setup Instructions
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/BookTrack.git
+git clone https://github.com/soham-thodge/BookTrack.git
 ```
 2. Navigate to the project directory
   cd BookTrack

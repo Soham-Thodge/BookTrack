@@ -23,7 +23,7 @@ const BookingForm = () => {
     const [posters, setPosters] = useState({});
     const [selectedMovieDetails, setSelectedMovieDetails] = useState(null);
     const [selectedSeats, setSelectedSeats] = useState([]);
-    const [submitted, setSubmitted] = useState(true);
+    const [submitted, setSubmitted] = useState(false);
     const [bookingData, setBookingData] = useState(null);
 
     useEffect(() => {
